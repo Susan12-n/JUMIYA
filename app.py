@@ -1,7 +1,10 @@
 from flask import*
 import pymysql
 from functions import *
+from mpesa import *
 app=Flask(__name__)
+# session key 
+app.secret_key="!@#$%^"
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 @app.route("/")
 def Homepage():
@@ -12,6 +15,7 @@ def Homepage():
  sql="select * from products WHERE product_category = 'phones' "
  sql1="select * from products WHERE product_category = 'monitors' "
  sql2="select * from products WHERE product_category ='Beds' "
+ sql3="select * from products WHERE product_category ='Bath' "
  
  
 #  you need to have a cursor 
@@ -19,11 +23,15 @@ def Homepage():
  cursor=connection.cursor()
  cursor1=connection.cursor()
  cursor2=connection.cursor()
+ cursor3=connection.cursor()
+
 
 #  execute 
  cursor.execute(sql)
  cursor1.execute(sql1)
  cursor2.execute(sql2)
+ cursor3.execute(sql3)
+
 
 #  fetch  all the phones rows
 
@@ -31,9 +39,9 @@ def Homepage():
 # fetch all monitors 
  monitors=cursor1.fetchall()
  beds=cursor2.fetchall()
+ bath=cursor3.fetchall()
 
-
- return render_template("index.html",phones = phones,monitors=monitors,beds=beds)
+ return render_template("index.html",phones = phones,monitors=monitors,beds=beds,bath=bath)
 
 # route fo a single item 
 @app.route("/single/<product_id>")
@@ -213,12 +221,27 @@ def Login():
             return render_template("login.html", error= " invalid login credatials ")
 
         else:
-            return render_template("login.html", message = "login successful ")
+            session['key']= email
+            return redirect("/")
         
     return render_template("login.html")
+    # mpesa  
+    # implement STK PUSH 
+@app.route('/mpesa', methods= ['POST'])
+def mpesa():
+   phone=request.form["phone"]
+   amount=request.form["amount"]
+   #use mpesa_payment function from mpesa.py 
+   #it accepts the phone and amount as arguments
+   mpesa_payment("1",phone) 
 
+
+
+   return'<h1>Please complete payment in your form</h1>'\
+   '<a href="/" class="btn btn-dark btn-sm">GO back to products </a>'
 @app.route("/logout")
 def Logout():
-    return("this is logout page")
+    session.clear()
+    return redirect("/login")
 if __name__=="__main__":
     app.run(debug= True,port=4000)
