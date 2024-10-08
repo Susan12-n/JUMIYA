@@ -1,6 +1,8 @@
 from flask import*
 import pymysql
+from functions import *
 app=Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key_here'
 @app.route("/")
 def Homepage():
    
@@ -163,14 +165,15 @@ def register():
         gender = request.form['gender']
         phone = request.form['phone']
         password = request.form['password']
-
+    
+       
        # connection to db 
 
         connection=pymysql.connect(host='localhost',user='root',password='',database='jumiya')
         cursor=connection.cursor()
 
         sql= "insert into users ( username,email,gender,phone,password )values(%s,%s,%s,%s,%s)"
-        data = username,email,gender,phone ,password
+        data = (username,email,gender,phone ,password)
 
 
         # execute
@@ -178,15 +181,42 @@ def register():
         # save the changes 
         connection.commit()
 
-        return render_template("register.html", message = " successful")
+        return render_template("register.html", message = " successful registration ")
 
     else:
      return render_template("register.html", error = "please enter correct details ")
 
 
-@app.route("/login")
+@app.route("/login", methods=['POST','GET'])
 def Login():
-    return("this is login page")
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+    
+       
+       # connection to db 
+
+        connection=pymysql.connect(host='localhost',user='root',password='',database='jumiya')
+        cursor=connection.cursor()
+#  check if user with email exist in the db 
+        sql= "select * from users where email= %s and password = %s"
+    
+        data = (email,password)
+
+
+        # execute
+        cursor.execute(sql,data)
+        # save the changes 
+        if cursor.rowcount == 0:
+            # it means if the username and password not found 
+
+            return render_template("login.html", error= " invalid login credatials ")
+
+        else:
+            return render_template("login.html", message = "login successful ")
+        
+    return render_template("login.html")
+
 @app.route("/logout")
 def Logout():
     return("this is logout page")

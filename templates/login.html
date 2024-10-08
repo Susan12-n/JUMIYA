@@ -11,24 +11,14 @@
     {%   include 'navbar.html' %}
     <b class="text-success"> {{ message }}</b>
     <b class="text-danger"> {{ error }}</b>
-        <form action="/register" method="POST">
-        <label for="">User Name</label>
-        <input type="text" class="form-control"name="username" required> <br>
+        <form action="/login" method="POST">
         <label for="">Email</label>
         <input type="email" class="form-control" name="email" required> <br>
-        <label for="">Gender</label>
-        <select name="gender" id="" class="form-control" required>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-        <br>
-        <label for="">Phone</label>
-        <input type="tel" class="form-control" name="phone" required>
-      <br>
       <label for="">Password</label>
       <input type="password" class="form-control" name="password" required> <br>
-      <a href="/login">Already have an Account ?Click to Login</a><br>
-    <button type="submit" button class="btn-primary">Register</button>
+    <button type="submit" button class="btn-primary">Login</button>
+    <a href="/register">Don't have an A?Click to Register</a><br>
+    <button type="submit" button class="btn-primary">Login</button>
       
     
 </body>
