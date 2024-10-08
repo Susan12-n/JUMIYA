@@ -155,9 +155,35 @@ def Uploadfashion():
 def About():
     return("this is about page")
 # creating registration
-@app.route("/register")
-def Register():
-    return("this is register page")
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        gender = request.form['gender']
+        phone = request.form['phone']
+        password = request.form['password']
+
+       # connection to db 
+
+        connection=pymysql.connect(host='localhost',user='root',password='',database='jumiya')
+        cursor=connection.cursor()
+
+        sql= "insert into users ( username,email,gender,phone,password )values(%s,%s,%s,%s,%s)"
+        data = username,email,gender,phone ,password
+
+
+        # execute
+        cursor.execute(sql,data)
+        # save the changes 
+        connection.commit()
+
+        return render_template("register.html", message = " successful")
+
+    else:
+     return render_template("register.html", error = "please enter correct details ")
+
+
 @app.route("/login")
 def Login():
     return("this is login page")
