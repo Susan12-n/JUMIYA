@@ -11,7 +11,7 @@ def Homepage():
    
 #    connect to DB 
 
- connection=pymysql.connect(host='localhost',user='root',password='',database='jumiya')
+ connection=pymysql.connect(host='susan99.mysql.pythonanywhere-services.com',user='susan99',password='ngesa1234',database='susan99$default')
  sql="select * from products WHERE product_category = 'phones' "
  sql1="select * from products WHERE product_category = 'monitors' "
  sql2="select * from products WHERE product_category ='Beds' "
@@ -47,7 +47,7 @@ def Homepage():
 @app.route("/single/<product_id>")
 def singleitem(product_id):
     # connection to db 
-     connection=pymysql.connect(host='localhost',user='root',password='',database='jumiya')
+     connection=pymysql.connect(host='susan99.mysql.pythonanywhere-services.com',user='susan99',password='ngesa1234',database='susan99$default')
 # create sql query 
      sql= " select * from products where product_id = %s "
     #  create a cursor 
@@ -71,7 +71,7 @@ def Upload():
 
         # connection to db 
 
-        connection=pymysql.connect(host='localhost',user='root',password='',database='jumiya')
+        connection=pymysql.connect(host='susan99.mysql.pythonanywhere-services.com',user='susan99',password='ngesa1234',database='susan99$default')
         cursor=connection.cursor()
 
         sql= "insert into products (product_name, product_desc, product_cost, product_category, product_image_name) values(%s,%s,%s,%s,%s)"
@@ -91,7 +91,7 @@ def Upload():
 # fashion route-helps you nto see all the fashion 
 @app.route("/fashion")
 def Fashion():
-    connection=pymysql.connect(host='localhost',user='root',password='',database='jumiya')
+    connection=pymysql.connect(host='susan99.mysql.pythonanywhere-services.com',user='susan99',password='ngesa1234',database='susan99$default')
     sql="select * from products WHERE product_category = 'dresses' "
     sql1="select * from products WHERE product_category = 'handbags' "
     sql2="select * from products WHERE product_category ='cap' "
@@ -143,7 +143,7 @@ def Uploadfashion():
 
         # connection to db 
 
-        connection=pymysql.connect(host='localhost',user='root',password='',database='jumiya')
+        connection=pymysql.connect(host='susan99.mysql.pythonanywhere-services.com',user='susan99',password='ngesa1234',database='susan99$default')
         cursor=connection.cursor()
 
         sql= "insert into products (product_name, product_desc, product_cost, product_category, product_image_name) values(%s,%s,%s,%s,%s)"
@@ -177,7 +177,7 @@ def register():
        
        # connection to db 
 
-        connection=pymysql.connect(host='localhost',user='root',password='',database='jumiya')
+        connection=pymysql.connect(host='susan99.mysql.pythonanywhere-services.com',user='susan99',password='ngesa1234',database='susan99$default')
         cursor=connection.cursor()
 
         sql= "insert into users ( username,email,gender,phone,password )values(%s,%s,%s,%s,%s)"
@@ -204,7 +204,7 @@ def Login():
        
        # connection to db 
 
-        connection=pymysql.connect(host='localhost',user='root',password='',database='jumiya')
+        connection=pymysql.connect(host='susan99.mysql.pythonanywhere-services.com',user='susan99',password='ngesa1234',database='susan99$default')
         cursor=connection.cursor()
 #  check if user with email exist in the db 
         sql= "select * from users where email= %s and password = %s"
